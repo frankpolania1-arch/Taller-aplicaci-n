@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.panel1 = new System.Windows.Forms.Panel();
-            this.CKterminos = new System.Windows.Forms.CheckBox();
+            this.CKrecordar = new System.Windows.Forms.CheckBox();
             this.BTNregistro = new System.Windows.Forms.Button();
             this.CKmostrar = new System.Windows.Forms.CheckBox();
             this.BTNinicio = new System.Windows.Forms.Button();
@@ -45,7 +45,7 @@
             // panel1
             // 
             this.panel1.BackColor = System.Drawing.SystemColors.AppWorkspace;
-            this.panel1.Controls.Add(this.CKterminos);
+            this.panel1.Controls.Add(this.CKrecordar);
             this.panel1.Controls.Add(this.BTNregistro);
             this.panel1.Controls.Add(this.CKmostrar);
             this.panel1.Controls.Add(this.BTNinicio);
@@ -61,15 +61,16 @@
             this.panel1.Size = new System.Drawing.Size(458, 528);
             this.panel1.TabIndex = 0;
             // 
-            // CKterminos
+            // CKrecordar
             // 
-            this.CKterminos.AutoSize = true;
-            this.CKterminos.Location = new System.Drawing.Point(32, 346);
-            this.CKterminos.Name = "CKterminos";
-            this.CKterminos.Size = new System.Drawing.Size(255, 24);
-            this.CKterminos.TabIndex = 10;
-            this.CKterminos.Text = "Aceptar terminos y condiciones";
-            this.CKterminos.UseVisualStyleBackColor = true;
+            this.CKrecordar.AutoSize = true;
+            this.CKrecordar.Location = new System.Drawing.Point(32, 346);
+            this.CKrecordar.Name = "CKrecordar";
+            this.CKrecordar.Size = new System.Drawing.Size(140, 24);
+            this.CKrecordar.TabIndex = 10;
+            this.CKrecordar.Text = "Recordar inicio";
+            this.CKrecordar.UseVisualStyleBackColor = true;
+            this.CKrecordar.CheckedChanged += new System.EventHandler(this.CKrecordar_CheckedChanged);
             // 
             // BTNregistro
             // 
@@ -172,6 +173,7 @@
             this.Controls.Add(this.panel1);
             this.Name = "Form1";
             this.Text = "Form1";
+            this.Load += new System.EventHandler(this.Form1_Load);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
             this.ResumeLayout(false);
@@ -189,7 +191,7 @@
         public System.Windows.Forms.Label label2;
         private System.Windows.Forms.Button BTNinicio;
         private System.Windows.Forms.CheckBox CKmostrar;
-        private System.Windows.Forms.CheckBox CKterminos;
+        private System.Windows.Forms.CheckBox CKrecordar;
         private System.Windows.Forms.Button BTNregistro;
     }
 }

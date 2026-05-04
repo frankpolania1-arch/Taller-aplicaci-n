@@ -16,5 +16,10 @@ namespace FPETDesktopApp.Recursos.Vistas.Jugador
         {
             InitializeComponent();
         }
+
+        private void BTNjuego_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("¡Vamos a jugar!"); 
+        }
     }
 }

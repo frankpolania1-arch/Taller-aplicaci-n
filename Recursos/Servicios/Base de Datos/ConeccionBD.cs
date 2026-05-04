@@ -10,7 +10,7 @@ namespace FPETDesktopApp.Recursos.Servicios.Base_de_Datos
 {
     public class ConeccionBD
     {
-        private string cadena = "server=localhost;database=BDarena;user=root;password=;";
+        private string cadena = "server=localhost;database=fpet_desktop_app;user=root;password=;";
         public MySqlConnection ObtenerConexion()
         {
             return new MySqlConnection(cadena);

@@ -157,6 +157,7 @@
     <Compile Include="Recursos\Servicios\API\DatosAPI.cs" />
     <Compile Include="Recursos\Servicios\Base de Datos\ConeccionBD.cs" />
     <Compile Include="Recursos\Servicios\GuardarMemoria\GuardaMemoria.cs" />
+    <Compile Include="Recursos\Servicios\GuardarMemoria\Permisos.cs" />
     <Compile Include="Recursos\Servicios\Mensajeria\Gmail\MensajeriaGmail.cs" />
     <Compile Include="Recursos\Vistas\Administrador\VistaAdministrador.cs">
       <SubType>Form</SubType>

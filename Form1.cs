@@ -23,7 +23,9 @@ namespace FPETDesktopApp
         InicioSesion sesion = new InicioSesion();
         InicioSesion login = new InicioSesion();
         Autentificar_Campos.Autentificar_Campos Acampos;
-
+        private string correo;
+        private string contraseña;
+        bool recuerdo = false;
 
         public Form1()
         {
@@ -69,6 +71,26 @@ namespace FPETDesktopApp
         {           
             VistaRegistro.Show();
             this.Hide();
+        }
+
+        private void CKrecordar_CheckedChanged(object sender, EventArgs e)
+        {
+            if (CKrecordar.Checked)
+            {
+                correo = TXTcorreo.Text;
+                contraseña = TXTcontraseña.Text;
+                recuerdo = true;
+
+            }
+        }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+            if(recuerdo)
+            {
+                TXTcorreo.Text = correo;
+                TXTcontraseña.Text = contraseña;
+            }
         }
     }
 }

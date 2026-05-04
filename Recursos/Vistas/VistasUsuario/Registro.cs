@@ -19,7 +19,7 @@ namespace FPETDesktopApp.Recursos.Vistas
         {
             InitializeComponent();
             BTNregistroNuevo.Enabled = false;
-
+            TXTcontraseña.PasswordChar = '*';
         }
 
         private async void BTNregistroNuevo_Click(object sender, EventArgs e)
@@ -95,6 +95,15 @@ namespace FPETDesktopApp.Recursos.Vistas
             Form1 form = new Form1();
             form.Show();
             this.Hide();
+        }
+
+        private void CKmostrar_CheckedChanged(object sender, EventArgs e)
+        {
+
+            if (CKmostrar.Checked)
+                TXTcontraseña.PasswordChar = '\0';
+            else
+                TXTcontraseña.PasswordChar = '*';
         }
     }   
 }

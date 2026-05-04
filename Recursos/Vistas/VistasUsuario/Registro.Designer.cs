@@ -154,6 +154,7 @@
             this.CKmostrar.TabIndex = 8;
             this.CKmostrar.Text = "Mostrar";
             this.CKmostrar.UseVisualStyleBackColor = true;
+            this.CKmostrar.CheckedChanged += new System.EventHandler(this.CKmostrar_CheckedChanged);
             // 
             // BTNinicio
             // 
