@@ -1,5 +1,8 @@
 ﻿using FPETDesktopApp.Recursos.Vistas.Administrador;
+using MySqlX.XDevAPI;
 using System;
+using System.Drawing;
+using System.IO;
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -9,58 +12,95 @@ namespace Trabajo_final.Cartas
 {
     public partial class Carta : UserControl
     {
-        VistaAdministrador Vadministrador = new VistaAdministrador();
-        CargarAPI API = new CargarAPI();
-        DatosAPI DatosAPI;
-        public Carta()
-        {
+        public DatosAPI datosCarta;
+        private VistaAdministrador vista;
 
+        // Constructor recibe el formulario
+        public Carta(VistaAdministrador v)
+        {
             InitializeComponent();
-            PBheroe.Dock = DockStyle.Fill;
+            vista = v;
             PBheroe.SizeMode = PictureBoxSizeMode.StretchImage;
-            AsignarClick(this);  
-        }
-        private void AsignarClick(Control control)
-        {
-            control.Click += PBheroe_Click;
+            PBheroe.Dock = DockStyle.Fill;
 
-            foreach (Control hijo in control.Controls)
-            {
-                AsignarClick(hijo);
-            }
+     
+
         }
+        private static HttpClient client = new HttpClient();
+
         public async Task CargarCarta(DatosAPI datos)
         {
+            datosCarta = datos;
+
+            vista.LBLnombreCarta.Text = datosCarta.Name ?? "Sin nombre";
+            vista.LBLataque.Text = datosCarta.Attack?.ToString() ?? "-";
+            vista.LBLvida.Text = datosCarta.Health?.ToString() ?? "-";
 
             try
             {
-                Vadministrador.LBLcargaCartas.Visible = true;
-                Vadministrador.LBLcargaCartas.Text = $"Cargando API...";
+                // 🔥 usamos el ID para generar la imagen
+                string url = $"https://art.hearthstonejson.com/v1/render/latest/esES/256x/{datosCarta.Id}.png";
 
+                var bytes = await client.GetByteArrayAsync(url);
 
-                var imageBytes = await API.client.GetByteArrayAsync(datos.Image);
-
-                using (var ms = new System.IO.MemoryStream(imageBytes))
+                using (MemoryStream ms = new MemoryStream(bytes))
                 {
-                    PBheroe.Image = System.Drawing.Image.FromStream(ms);
-                    this.BackgroundImage = PBheroe.Image;
-                    this.BackgroundImageLayout = ImageLayout.Stretch;
-                    PBheroe.Visible = false;
+                    PBheroe.Image = Image.FromStream(ms);
                 }
-                Vadministrador.LBLcargaCartas.Text = $"API cargada";
             }
-            catch (HttpRequestException ex)
+            catch
             {
-                MessageBox.Show($"Error al cargar la imagen: {ex.Message}");
+                // fallback si falla
+                PBheroe.BackColor = Color.DarkGray;
             }
+
+            PBheroe.SizeMode = PictureBoxSizeMode.StretchImage;
         }
 
+
+        public void mostrarDetalles()
+        {
+            vista.LBLnombreCarta.Visible = true;
+            vista.LBLvida.Visible = true;
+            vista.LBLataque.Visible = true;
+            vista.LBLtipo.Visible = true;
+            vista.LBLcoste.Visible = true;
+            vista.LBLclase.Visible = true;
+            vista.LBLraza.Visible = true;
+            vista.LBLraro.Visible = true;
+        }
+        public void GuardarCarta()
+        {
+            if (datosCarta == null)
+            {
+                MessageBox.Show("Error: datosCarta es NULL");
+                return;
+            }
+            // Aquí puedes implementar la lógica para guardar los datos de la carta en la base de datos
+            // utilizando los valores de datosCarta y las etiquetas del formulario.
+        }
+
+
+
+        // Evento click
         private void PBheroe_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("¡Has hecho clic en la carta!");
-            Vadministrador.LBLnombreCarta.Text = "Nombre: " + DatosAPI.Name.ToString();
-            Vadministrador.LBLvida.Text = "Vida: ";
+            if (datosCarta == null)
+            {
+                MessageBox.Show("Error: datosCarta es NULL");
+                return;
+            }
+        
 
+            vista.LBLnombreCarta.Text = "Nombre: " + datosCarta.Name;
+            vista.LBLvida.Text = "Vida: " + (datosCarta.Health?.ToString() ?? "-");
+            vista.LBLataque.Text = "Ataque: " + (datosCarta.Attack?.ToString() ?? "-");
+            vista.LBLtipo.Text = "Tipo: " + (datosCarta.Type ?? "-");
+            vista.LBLcoste.Text = "Coste: " + (datosCarta.Cost?.ToString() ?? "-");
+            vista.LBLraza.Text = "Raza" + (datosCarta.race?? "-");
+            vista.LBLclase.Text = "Clase " + (datosCarta.cardClass ?? "-");
+            vista.LBLraro.Text = "Rareza " + (datosCarta.rarity ?? "-");
+            mostrarDetalles();
         }
     }
 }

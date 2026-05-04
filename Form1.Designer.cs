@@ -70,7 +70,6 @@
             this.CKterminos.TabIndex = 10;
             this.CKterminos.Text = "Aceptar terminos y condiciones";
             this.CKterminos.UseVisualStyleBackColor = true;
-            this.CKterminos.CheckedChanged += new System.EventHandler(this.CKterminos_CheckedChanged);
             // 
             // BTNregistro
             // 
@@ -95,9 +94,9 @@
             // 
             // BTNinicio
             // 
-            this.BTNinicio.Location = new System.Drawing.Point(287, 379);
+            this.BTNinicio.Location = new System.Drawing.Point(225, 379);
             this.BTNinicio.Name = "BTNinicio";
-            this.BTNinicio.Size = new System.Drawing.Size(123, 67);
+            this.BTNinicio.Size = new System.Drawing.Size(123, 61);
             this.BTNinicio.TabIndex = 6;
             this.BTNinicio.Text = "Inicio";
             this.BTNinicio.UseVisualStyleBackColor = true;

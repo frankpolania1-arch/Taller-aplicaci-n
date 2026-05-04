@@ -1,4 +1,5 @@
 ﻿using FPETDesktopApp.Recursos.Controles;
+using Google.Protobuf.Collections;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -23,6 +24,7 @@ namespace FPETDesktopApp.Recursos.Vistas.Administrador
         public VistaAdministrador()
         {
             InitializeComponent();
+            ocultarDetalles();
             GridPermisos.AutoGenerateColumns = false;
             GridBD.AutoGenerateColumns = true;
             consulta = new ConsultasSQL();
@@ -59,91 +61,60 @@ namespace FPETDesktopApp.Recursos.Vistas.Administrador
         }
         private async Task CargarCartas()
         {
-            try
-            {
-                PanelCartasAdmin.AutoScroll = true;
+            PanelCartasAdmin.AutoScroll = true;
+            cartas = await cargarAPI.ObtenerAPI();
 
-                // 1. Cargar API
-                cartas = await cargarAPI.ObtenerAPI();
+            cartas = await Task.Run(() => cartas.Where(x =>
+                !string.IsNullOrWhiteSpace(x.Name) &&
+                x.Attack.HasValue &&
+                x.Health.HasValue &&
+                !string.IsNullOrWhiteSpace(x.Type) &&
+                !string.IsNullOrWhiteSpace(x.Id)
+            ).ToList());
 
-                if (cartas == null || cartas.Count == 0)
-                {
-                    MessageBox.Show("No se cargaron cartas desde la API");
-                    return;
-                }
 
-                // 2. Filtrar (fuera del hilo UI)
 
-                cartas = await Task.Run(() => cartas.Where(x =>
-                    !string.IsNullOrWhiteSpace(x.Name) &&
-                    x.Attack.HasValue &&
-                    x.Health.HasValue &&
-                    !string.IsNullOrWhiteSpace(x.Type) &&
-                    !string.IsNullOrWhiteSpace(x.Id)
-                ).ToList());
+            pagina = 0;
 
-                // 3. Reset paginación
-                pagina = 0;
-
-                // 4. Mostrar
-                await MostrarPagina();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Error al cargar cartas: " + ex.Message);
-            }
+            await MostrarPagina();
         }
         private async Task MostrarPagina()
         {
-            PBcargaCartas.Visible = true;  
-            LBLcargaCartas.Visible = true;
-            LBLcargaCartas.Text = $"Cargando cartas...";
             int cantidad = 20;
             int cartasPorFila = 4;
 
             int anchoCarta = 160;
             int altoCarta = 220;
-            int espacioEntreCartas = 20;
+            int espacio = 20;
 
             PanelCartasAdmin.SuspendLayout();
             PanelCartasAdmin.Controls.Clear();
+
 
             var grupo = cartas
                 .Skip(pagina * cantidad)
                 .Take(cantidad)
                 .ToList();
 
-            if (grupo.Count == 0)
-            {
-                PanelCartasAdmin.ResumeLayout();
-                return;
-            }
-            var tareas = grupo.Select(async datos =>
-            {
-                Carta carta = new Carta();
-                await carta.CargarCarta(datos);
-                return carta;
-            }).ToList();
-
-            var cartasCargadas = await Task.WhenAll(tareas);
-
             int contador = 0;
-            PBcargaCartas.Value = 0;
 
-            foreach (var carta in cartasCargadas)
+            foreach (var datos in grupo)
             {
+                Carta carta = new Carta(this); // 🔥 PASAS EL FORM
+
+                await carta.CargarCarta(datos); // 🔥 AQUÍ SE ASIGNA datosCarta
+
                 int columna = contador % cartasPorFila;
                 int fila = contador / cartasPorFila;
 
-                int x = columna * (anchoCarta + espacioEntreCartas);
-                int y = fila * (altoCarta + espacioEntreCartas);
+                int x = columna * (anchoCarta + espacio);
+                int y = fila * (altoCarta + espacio);
 
                 carta.Location = new Point(x, y);
 
                 PanelCartasAdmin.Controls.Add(carta);
 
                 contador++;
-                PBcargaCartas.Value = (contador * 100) / cartasCargadas.Length;
             }
 
             PanelCartasAdmin.ResumeLayout();
@@ -183,6 +154,17 @@ namespace FPETDesktopApp.Recursos.Vistas.Administrador
                 await MostrarPagina();
             }
         }
+        public void ocultarDetalles()
+        {
+            LBLnombreCarta.Visible = false;
+            LBLvida.Visible = false;
+            LBLataque.Visible = false;
+            LBLtipo.Visible = false;
+            LBLcoste.Visible = false;
+            LBLraza.Visible = false;
+            LBLclase.Visible = false;
+            LBLraro.Visible = false;
+        }
 
         private void ComboTablaBD_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -194,6 +176,11 @@ namespace FPETDesktopApp.Recursos.Vistas.Administrador
                 GridBD.DataSource = consulta.EjecutarConsulta(consultaSQL);
                 Console.WriteLine("tab index" + ComboTablaBD.SelectedIndex);
             }
+        }
+
+        private void BTNagregar_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

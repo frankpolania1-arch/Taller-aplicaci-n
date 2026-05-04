@@ -10,6 +10,7 @@ using System.Windows.Forms;
 using Autentificar_Campos;
 using FPETDesktopApp.Recursos.Controles.Base_de_datos.Consultas;
 using FPETDesktopApp.Recursos.Vistas;
+using FPETDesktopApp.Recursos.Vistas.Administrador;
 using FPETDesktopApp.Recursos.Vistas.Jugador;
 
 namespace FPETDesktopApp
@@ -17,27 +18,43 @@ namespace FPETDesktopApp
     public partial class Form1 : Form
     {
         FormRegistro VistaRegistro;
-        Form_Jugador VistaJugador = new Form_Jugador();
+        FormMenu VistaJugador = new FormMenu();
+        VistaAdministrador Vadministrador = new VistaAdministrador();   
         InicioSesion sesion = new InicioSesion();
+        InicioSesion login = new InicioSesion();
+        Autentificar_Campos.Autentificar_Campos Acampos;
+
+
         public Form1()
         {
             InitializeComponent();
             TXTcontraseña.PasswordChar = '*';
             BTNinicio.Enabled = true;
             VistaRegistro = new FormRegistro();
+            Acampos = new Autentificar_Campos.Autentificar_Campos();
         }
         private void BTNinicio_Click(object sender, EventArgs e)
         {
-            bool acceso = sesion.Login(TXTcorreo.Text, TXTcontraseña.Text);
-            if (acceso)
+            string rol = login.Login(TXTcorreo.Text, TXTcontraseña.Text);
+
+            if (rol != null)
             {
-                MessageBox.Show("Bienvenido 🎮");
-                VistaJugador.Show();
-                this.Hide(); // oculta el actual
+                MessageBox.Show("Inicio de sesión correcto");
+
+                if (rol == "Administrador")
+                {
+                    Vadministrador.Show();
+                    this.Hide();
+                }
+                else if (rol == "Jugador")
+                {
+                    VistaJugador.Show();
+                    this.Hide();
+                }
             }
             else
             {
-                MessageBox.Show("Datos incorrectos ❌");
+                MessageBox.Show("Usuario o contraseña incorrectos");
             }
         }
         private void CKmostrar_CheckedChanged(object sender, EventArgs e)
@@ -47,16 +64,7 @@ namespace FPETDesktopApp
             else
                 TXTcontraseña.PasswordChar = '*';
         }
-        private void CKterminos_CheckedChanged(object sender, EventArgs e)
-        {
-            if (CKterminos.Checked)
-            {
-                BTNinicio.Enabled = true;
-            }
-            else {
-                BTNinicio.Enabled = false;
-            }
-        }
+    
         private void BTNregistro_Click(object sender, EventArgs e)
         {           
             VistaRegistro.Show();

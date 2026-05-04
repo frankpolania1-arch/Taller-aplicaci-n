@@ -9,7 +9,7 @@ namespace Trabajo_final.Scripts.API
 {
     class CargarAPI
     {
-        public readonly HttpClient client = new HttpClient();
+        private static HttpClient client = new HttpClient();
 
         public async Task<List<DatosAPI>> ObtenerAPI()
         {

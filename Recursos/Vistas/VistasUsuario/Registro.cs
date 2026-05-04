@@ -1,4 +1,5 @@
-﻿using System;
+﻿using FPETDesktopApp.Recursos.Controles;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -17,14 +18,17 @@ namespace FPETDesktopApp.Recursos.Vistas
         public FormRegistro()
         {
             InitializeComponent();
-         
+            BTNregistroNuevo.Enabled = false;
+
         }
 
         private async void BTNregistroNuevo_Click(object sender, EventArgs e)
         {
             try
             {
-                // Datos del usuario
+                BTNregistroNuevo.Enabled = false;
+                Autentificar_Campos.Autentificar_Campos Acampos = new Autentificar_Campos.Autentificar_Campos();
+           
                 string correo = TXTcorreo.Text.Trim();
                 string nombreUsuario = TXTusuario.Text.Trim();
 
@@ -36,26 +40,61 @@ namespace FPETDesktopApp.Recursos.Vistas
                 Servicios.Mensajeria.Gmail.MensajeriaGmail mensajeria =
                     new Servicios.Mensajeria.Gmail.MensajeriaGmail();
 
-              
+               if(string.IsNullOrEmpty(correo) || string.IsNullOrEmpty(nombreUsuario) || string.IsNullOrEmpty(TXTcontraseña.Text)||string.IsNullOrEmpty(ComboRol.Text))
+                {
+                    MessageBox.Show("Por favor, complete todos los campos.");
+                    return;
+                }
                 // Enviar correo usando HTML dinámico
-                await mensajeria.EnviarEmail(
-                    correo,
-                    "Código de verificación",
-                    codigo,
-                    nombreUsuario
-                );
+                if (Acampos.IsValidCorreo(TXTcorreo.Text.Trim()))
+                {
+                    {
+                        await mensajeria.EnviarEmail(
+                        correo,
+                        "Código de verificación",
+                        codigo,
+                        nombreUsuario);
+                        MessageBox.Show("Correo enviado correctamente.");
 
-                Console.WriteLine("Codigo generado" + codigo);
-                MessageBox.Show("Correo enviado correctamente.");
-                AutentificacionRegistro Ar = new AutentificacionRegistro();
-                Ar.codigoAutentificacion = codigo; // Pasar el código al formulario de autenticación
+
+                    }
+                } else if (Acampos.IsValidCorreo(TXTcorreo.Text.Trim())==false)
+                {
+                    BTNregistroNuevo.Enabled = true;
+                    return;
+                }
+
+
+                    AutentificacionRegistro Ar = new AutentificacionRegistro();
+                Ar.rol = ComboRol.Text;
+                Ar.nombre = nombreUsuario;
+                Ar.correo = correo;
+                Ar.contraseña = TXTcontraseña.Text;
+                Ar.codigoAutentificacion = codigo; 
                 Ar.Show();
                 this.Close();
             }
             catch (Exception ex)
             {
                 MessageBox.Show("Error: " + ex.Message);
+                return;
             }
+        }
+
+        private void CKterminos_CheckedChanged(object sender, EventArgs e)
+        {
+            if (CKterminos.Checked)
+            {
+                BTNregistroNuevo.Enabled = true;
+
+            } else BTNregistroNuevo.Enabled = false;
+        }
+
+        private void BTNinicio_Click(object sender, EventArgs e)
+        {
+            Form1 form = new Form1();
+            form.Show();
+            this.Hide();
         }
     }   
 }

@@ -1,6 +1,6 @@
 ﻿namespace FPETDesktopApp.Recursos.Vistas.Jugador
 {
-    partial class Form_Jugador
+    partial class FormMenu
     {
         /// <summary>
         /// Required designer variable.
@@ -29,10 +29,10 @@
         private void InitializeComponent()
         {
             this.panel1 = new System.Windows.Forms.Panel();
-            this.panel2 = new System.Windows.Forms.Panel();
-            this.button1 = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
             this.button3 = new System.Windows.Forms.Button();
+            this.button2 = new System.Windows.Forms.Button();
+            this.button1 = new System.Windows.Forms.Button();
+            this.panel2 = new System.Windows.Forms.Panel();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -48,21 +48,14 @@
             this.panel1.Size = new System.Drawing.Size(214, 663);
             this.panel1.TabIndex = 0;
             // 
-            // panel2
+            // button3
             // 
-            this.panel2.Location = new System.Drawing.Point(220, 12);
-            this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(811, 639);
-            this.panel2.TabIndex = 1;
-            // 
-            // button1
-            // 
-            this.button1.Location = new System.Drawing.Point(58, 126);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(93, 47);
-            this.button1.TabIndex = 0;
-            this.button1.Text = "button1";
-            this.button1.UseVisualStyleBackColor = true;
+            this.button3.Location = new System.Drawing.Point(58, 60);
+            this.button3.Name = "button3";
+            this.button3.Size = new System.Drawing.Size(93, 47);
+            this.button3.TabIndex = 2;
+            this.button3.Text = "button3";
+            this.button3.UseVisualStyleBackColor = true;
             // 
             // button2
             // 
@@ -73,23 +66,30 @@
             this.button2.Text = "button2";
             this.button2.UseVisualStyleBackColor = true;
             // 
-            // button3
+            // button1
             // 
-            this.button3.Location = new System.Drawing.Point(58, 60);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(93, 47);
-            this.button3.TabIndex = 2;
-            this.button3.Text = "button3";
-            this.button3.UseVisualStyleBackColor = true;
+            this.button1.Location = new System.Drawing.Point(58, 126);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(93, 47);
+            this.button1.TabIndex = 0;
+            this.button1.Text = "button1";
+            this.button1.UseVisualStyleBackColor = true;
             // 
-            // Form_Jugador
+            // panel2
+            // 
+            this.panel2.Location = new System.Drawing.Point(220, 12);
+            this.panel2.Name = "panel2";
+            this.panel2.Size = new System.Drawing.Size(811, 639);
+            this.panel2.TabIndex = 1;
+            // 
+            // FormMenu
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1043, 663);
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.panel1);
-            this.Name = "Form_Jugador";
+            this.Name = "FormMenu";
             this.Text = "Menu";
             this.panel1.ResumeLayout(false);
             this.ResumeLayout(false);

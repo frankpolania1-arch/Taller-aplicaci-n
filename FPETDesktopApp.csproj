@@ -142,6 +142,7 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Recursos\Controles\Base de datos\Consultas\AgregarRegistro.cs" />
     <Compile Include="Recursos\Controles\Base de datos\Consultas\InicioSesion.cs" />
     <Compile Include="Recursos\Controles\Cartas\Carta.cs">
       <SubType>UserControl</SubType>
@@ -155,6 +156,7 @@
     <Compile Include="Recursos\Servicios\API\CargarAPI.cs" />
     <Compile Include="Recursos\Servicios\API\DatosAPI.cs" />
     <Compile Include="Recursos\Servicios\Base de Datos\ConeccionBD.cs" />
+    <Compile Include="Recursos\Servicios\GuardarMemoria\GuardaMemoria.cs" />
     <Compile Include="Recursos\Servicios\Mensajeria\Gmail\MensajeriaGmail.cs" />
     <Compile Include="Recursos\Vistas\Administrador\VistaAdministrador.cs">
       <SubType>Form</SubType>
@@ -162,11 +164,11 @@
     <Compile Include="Recursos\Vistas\Administrador\VistaAdministrador.Designer.cs">
       <DependentUpon>VistaAdministrador.cs</DependentUpon>
     </Compile>
-    <Compile Include="Recursos\Vistas\Jugador\Menu.cs">
+    <Compile Include="Recursos\Vistas\Jugador\FormMenu.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Recursos\Vistas\Jugador\Menu.Designer.cs">
-      <DependentUpon>Menu.cs</DependentUpon>
+    <Compile Include="Recursos\Vistas\Jugador\FormMenu.Designer.cs">
+      <DependentUpon>FormMenu.cs</DependentUpon>
     </Compile>
     <Compile Include="Recursos\Vistas\VistasUsuario\AutentificacionRegistro.cs">
       <SubType>Form</SubType>
@@ -179,12 +181,6 @@
     </Compile>
     <Compile Include="Recursos\Vistas\VistasUsuario\Registro.Designer.cs">
       <DependentUpon>Registro.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Recursos\Vistas\VistasUsuario\VistaUsuario.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Recursos\Vistas\VistasUsuario\VistaUsuario.Designer.cs">
-      <DependentUpon>VistaUsuario.cs</DependentUpon>
     </Compile>
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
@@ -204,17 +200,14 @@
     <EmbeddedResource Include="Recursos\Vistas\Administrador\VistaAdministrador.resx">
       <DependentUpon>VistaAdministrador.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Recursos\Vistas\Jugador\Menu.resx">
-      <DependentUpon>Menu.cs</DependentUpon>
+    <EmbeddedResource Include="Recursos\Vistas\Jugador\FormMenu.resx">
+      <DependentUpon>FormMenu.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Recursos\Vistas\VistasUsuario\AutentificacionRegistro.resx">
       <DependentUpon>AutentificacionRegistro.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Recursos\Vistas\VistasUsuario\Registro.resx">
       <DependentUpon>Registro.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Recursos\Vistas\VistasUsuario\VistaUsuario.resx">
-      <DependentUpon>VistaUsuario.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">

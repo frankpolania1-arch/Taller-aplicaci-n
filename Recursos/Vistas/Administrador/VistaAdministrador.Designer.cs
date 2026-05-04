@@ -50,15 +50,19 @@ namespace FPETDesktopApp.Recursos.Vistas.Administrador
             this.tabPage3 = new System.Windows.Forms.TabPage();
             this.PanelCartasAdmin = new System.Windows.Forms.FlowLayoutPanel();
             this.panel3 = new System.Windows.Forms.Panel();
+            this.BTNagregar = new System.Windows.Forms.Button();
+            this.LBLtipo = new System.Windows.Forms.Label();
+            this.LBLataque = new System.Windows.Forms.Label();
+            this.LBLvida = new System.Windows.Forms.Label();
+            this.LBLnombreCarta = new System.Windows.Forms.Label();
             this.LBLcargaCartas = new System.Windows.Forms.Label();
             this.PBcargaCartas = new System.Windows.Forms.ProgressBar();
             this.BTNsiguiente = new System.Windows.Forms.Button();
             this.BTNanterior = new System.Windows.Forms.Button();
-            this.LBLnombreCarta = new System.Windows.Forms.Label();
-            this.LBLvida = new System.Windows.Forms.Label();
-            this.LBLataque = new System.Windows.Forms.Label();
             this.LBLcoste = new System.Windows.Forms.Label();
-            this.BTNagregar = new System.Windows.Forms.Button();
+            this.LBLraza = new System.Windows.Forms.Label();
+            this.LBLclase = new System.Windows.Forms.Label();
+            this.LBLraro = new System.Windows.Forms.Label();
             this.tabPage2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.GridPermisos)).BeginInit();
             this.tabPage1.SuspendLayout();
@@ -278,8 +282,12 @@ namespace FPETDesktopApp.Recursos.Vistas.Administrador
             // 
             // panel3
             // 
-            this.panel3.Controls.Add(this.BTNagregar);
+            this.panel3.Controls.Add(this.LBLraro);
+            this.panel3.Controls.Add(this.LBLclase);
+            this.panel3.Controls.Add(this.LBLraza);
             this.panel3.Controls.Add(this.LBLcoste);
+            this.panel3.Controls.Add(this.BTNagregar);
+            this.panel3.Controls.Add(this.LBLtipo);
             this.panel3.Controls.Add(this.LBLataque);
             this.panel3.Controls.Add(this.LBLvida);
             this.panel3.Controls.Add(this.LBLnombreCarta);
@@ -291,6 +299,52 @@ namespace FPETDesktopApp.Recursos.Vistas.Administrador
             this.panel3.Name = "panel3";
             this.panel3.Size = new System.Drawing.Size(1213, 136);
             this.panel3.TabIndex = 0;
+            // 
+            // BTNagregar
+            // 
+            this.BTNagregar.Location = new System.Drawing.Point(1065, 10);
+            this.BTNagregar.Name = "BTNagregar";
+            this.BTNagregar.Size = new System.Drawing.Size(123, 52);
+            this.BTNagregar.TabIndex = 12;
+            this.BTNagregar.Text = "Agregar";
+            this.BTNagregar.UseVisualStyleBackColor = true;
+            this.BTNagregar.Click += new System.EventHandler(this.BTNagregar_Click);
+            // 
+            // LBLtipo
+            // 
+            this.LBLtipo.AutoSize = true;
+            this.LBLtipo.Location = new System.Drawing.Point(330, 101);
+            this.LBLtipo.Name = "LBLtipo";
+            this.LBLtipo.Size = new System.Drawing.Size(51, 20);
+            this.LBLtipo.TabIndex = 11;
+            this.LBLtipo.Text = "label4";
+            // 
+            // LBLataque
+            // 
+            this.LBLataque.AutoSize = true;
+            this.LBLataque.Location = new System.Drawing.Point(330, 70);
+            this.LBLataque.Name = "LBLataque";
+            this.LBLataque.Size = new System.Drawing.Size(51, 20);
+            this.LBLataque.TabIndex = 10;
+            this.LBLataque.Text = "label4";
+            // 
+            // LBLvida
+            // 
+            this.LBLvida.AutoSize = true;
+            this.LBLvida.Location = new System.Drawing.Point(330, 39);
+            this.LBLvida.Name = "LBLvida";
+            this.LBLvida.Size = new System.Drawing.Size(51, 20);
+            this.LBLvida.TabIndex = 9;
+            this.LBLvida.Text = "label4";
+            // 
+            // LBLnombreCarta
+            // 
+            this.LBLnombreCarta.AutoSize = true;
+            this.LBLnombreCarta.Location = new System.Drawing.Point(330, 10);
+            this.LBLnombreCarta.Name = "LBLnombreCarta";
+            this.LBLnombreCarta.Size = new System.Drawing.Size(51, 20);
+            this.LBLnombreCarta.TabIndex = 8;
+            this.LBLnombreCarta.Text = "label4";
             // 
             // LBLcargaCartas
             // 
@@ -328,50 +382,41 @@ namespace FPETDesktopApp.Recursos.Vistas.Administrador
             this.BTNanterior.UseVisualStyleBackColor = true;
             this.BTNanterior.Click += new System.EventHandler(this.BTNanterior_Click);
             // 
-            // LBLnombreCarta
-            // 
-            this.LBLnombreCarta.AutoSize = true;
-            this.LBLnombreCarta.Location = new System.Drawing.Point(330, 10);
-            this.LBLnombreCarta.Name = "LBLnombreCarta";
-            this.LBLnombreCarta.Size = new System.Drawing.Size(51, 20);
-            this.LBLnombreCarta.TabIndex = 8;
-            this.LBLnombreCarta.Text = "label4";
-            // 
-            // LBLvida
-            // 
-            this.LBLvida.AutoSize = true;
-            this.LBLvida.Location = new System.Drawing.Point(330, 39);
-            this.LBLvida.Name = "LBLvida";
-            this.LBLvida.Size = new System.Drawing.Size(51, 20);
-            this.LBLvida.TabIndex = 9;
-            this.LBLvida.Text = "label4";
-            // 
-            // LBLataque
-            // 
-            this.LBLataque.AutoSize = true;
-            this.LBLataque.Location = new System.Drawing.Point(330, 70);
-            this.LBLataque.Name = "LBLataque";
-            this.LBLataque.Size = new System.Drawing.Size(51, 20);
-            this.LBLataque.TabIndex = 10;
-            this.LBLataque.Text = "label4";
-            // 
             // LBLcoste
             // 
             this.LBLcoste.AutoSize = true;
-            this.LBLcoste.Location = new System.Drawing.Point(330, 101);
+            this.LBLcoste.Location = new System.Drawing.Point(655, 10);
             this.LBLcoste.Name = "LBLcoste";
             this.LBLcoste.Size = new System.Drawing.Size(51, 20);
-            this.LBLcoste.TabIndex = 11;
+            this.LBLcoste.TabIndex = 13;
             this.LBLcoste.Text = "label4";
             // 
-            // BTNagregar
+            // LBLraza
             // 
-            this.BTNagregar.Location = new System.Drawing.Point(1065, 10);
-            this.BTNagregar.Name = "BTNagregar";
-            this.BTNagregar.Size = new System.Drawing.Size(123, 52);
-            this.BTNagregar.TabIndex = 12;
-            this.BTNagregar.Text = "Agregar";
-            this.BTNagregar.UseVisualStyleBackColor = true;
+            this.LBLraza.AutoSize = true;
+            this.LBLraza.Location = new System.Drawing.Point(655, 93);
+            this.LBLraza.Name = "LBLraza";
+            this.LBLraza.Size = new System.Drawing.Size(51, 20);
+            this.LBLraza.TabIndex = 14;
+            this.LBLraza.Text = "label4";
+            // 
+            // LBLclase
+            // 
+            this.LBLclase.AutoSize = true;
+            this.LBLclase.Location = new System.Drawing.Point(655, 53);
+            this.LBLclase.Name = "LBLclase";
+            this.LBLclase.Size = new System.Drawing.Size(51, 20);
+            this.LBLclase.TabIndex = 15;
+            this.LBLclase.Text = "label4";
+            // 
+            // LBLraro
+            // 
+            this.LBLraro.AutoSize = true;
+            this.LBLraro.Location = new System.Drawing.Point(839, 10);
+            this.LBLraro.Name = "LBLraro";
+            this.LBLraro.Size = new System.Drawing.Size(51, 20);
+            this.LBLraro.TabIndex = 16;
+            this.LBLraro.Text = "label4";
             // 
             // VistaAdministrador
             // 
@@ -424,9 +469,13 @@ namespace FPETDesktopApp.Recursos.Vistas.Administrador
         public System.Windows.Forms.Label LBLcargaCartas;
         private System.Windows.Forms.Button BTNagregar;
         public System.Windows.Forms.TabPage tabPage3;
-        public System.Windows.Forms.Label LBLcoste;
+        public System.Windows.Forms.Label LBLtipo;
         public System.Windows.Forms.Label LBLataque;
         public System.Windows.Forms.Label LBLvida;
         public System.Windows.Forms.Label LBLnombreCarta;
+        public System.Windows.Forms.Label LBLcoste;
+        public System.Windows.Forms.Label LBLclase;
+        public System.Windows.Forms.Label LBLraza;
+        public System.Windows.Forms.Label LBLraro;
     }
 }

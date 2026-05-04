@@ -14,18 +14,30 @@ namespace FPETDesktopApp.Recursos.Controles.Base_de_datos.Consultas
         ConeccionBD coneccionBD = new ConeccionBD();
         ConsultasSQL consultasSQL = new ConsultasSQL();
 
-        public bool Login(string usuario, string contraseña)
+        public string Login(string usuario, string contraseña)
         {
-            string consulta = "SELECT COUNT(*) FROM usuarios WHERE email = @usuarios AND password = @contraseña";
-            ConeccionBD conexionBD = new ConeccionBD();
-            using (MySqlConnection conn = conexionBD.ObtenerConexion())
+            string consulta = "SELECT rol FROM usuarios WHERE email = @email AND password = @pass LIMIT 1";
+
+            using (MySqlConnection conn = new ConeccionBD().ObtenerConexion())
             {
                 conn.Open();
-                MySqlCommand cmd = new MySqlCommand(consulta, conn);
-                cmd.Parameters.AddWithValue("@usuarios", usuario);
-                cmd.Parameters.AddWithValue("@contraseña", contraseña);
-                int resultado = Convert.ToInt32(cmd.ExecuteScalar());
-                return resultado > 0;
+
+                using (MySqlCommand cmd = new MySqlCommand(consulta, conn))
+                {
+                    cmd.Parameters.AddWithValue("@email", usuario);
+                    cmd.Parameters.AddWithValue("@pass", contraseña);
+
+                    var resultado = cmd.ExecuteScalar();
+
+                    if (resultado != null)
+                    {
+                        return resultado.ToString(); // retorna el rol
+                    }
+                    else
+                    {
+                        return null; // usuario o contraseña incorrectos
+                    }
+                }
             }
         }
     }

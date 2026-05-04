@@ -26,7 +26,8 @@ namespace FPETDesktopApp.Recursos.Controles
             switch (numeroConsulta)
             {
                 case -1:
-                    ConsultaSQL = "SELECT * FROM usuarios";
+                    ConsultaSQL =
+                        "SELECT id, nombre, email, rol, fecha_registro FROM usuarios";
                     return ConsultaSQL;
 
                 default:

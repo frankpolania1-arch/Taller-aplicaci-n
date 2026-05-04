@@ -10,9 +10,9 @@ using System.Windows.Forms;
 
 namespace FPETDesktopApp.Recursos.Vistas.Jugador
 {
-    public partial class Form_Jugador : Form
+    public partial class FormMenu : Form
     {
-        public Form_Jugador()
+        public FormMenu()
         {
             InitializeComponent();
         }
