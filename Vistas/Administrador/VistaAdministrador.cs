@@ -1,5 +1,8 @@
-﻿using FPETDesktopApp.Recursos.Controles;
+﻿using FPETDesktopApp.Controles.PermisosAplicacion;
+using FPETDesktopApp.Recursos.Controles;
+using FPETDesktopApp.Recursos.Controles.Base_de_datos.Consultas;
 using FPETDesktopApp.Recursos.Servicios.GuardarMemoria;
+using FPETDesktopApp.Recursos.Vistas.Jugador;
 using Google.Protobuf.Collections;
 using System;
 using System.Collections.Generic;
@@ -20,15 +23,18 @@ namespace FPETDesktopApp.Recursos.Vistas.Administrador
     {
         CargarAPI cargarAPI;
         private List<DatosAPI> cartas = new List<DatosAPI>();
-        PermisosService permisos = new PermisosService();
+        GuardarMemoria guardarMemoria = new GuardarMemoria();
         int pagina = 0;
         int cantidad = 50;
+        bool cargando = false;
+        private FormMenu formMenuRef;
         ConsultasSQL consulta;
-
+        PermisosAplicacion permisosAplicacion = new PermisosAplicacion();
         public VistaAdministrador()
         {
             InitializeComponent();
-
+            formMenuRef = new FormMenu();
+            GridPermisos.CellContentClick += GridPermisos_CellContentClick;
             GridPermisos.Refresh();
             GridPermisos.CellValueChanged += GridPermisos_CellValueChanged;
             GridPermisos.CurrentCellDirtyStateChanged += GridPermisos_CurrentCellDirtyStateChanged;
@@ -40,32 +46,40 @@ namespace FPETDesktopApp.Recursos.Vistas.Administrador
             ocultarDetalles();
             PanelDetalles();
             CargarPermisos();
+  
 
         }
         void CargarPermisos()
         {
+            cargando = true;
 
             GridPermisos.Dock = DockStyle.Fill;
             GridPermisos.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
-            GridPermisos.ColumnHeaderCellChanged += (s, e) => GridPermisos.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             GridPermisos.AutoGenerateColumns = false;
             GridPermisos.RowHeadersWidth = 150;
-            GridPermisos.Rows.Add(6);
-            GridPermisos.Rows[0].HeaderCell.Value = "Usuario Guardar";
-            GridPermisos.Rows[1].HeaderCell.Value = "Usuario Borrar";
-            GridPermisos.Rows[2].HeaderCell.Value = "Guardar Cartas";
-            GridPermisos.Rows[3].HeaderCell.Value = "Modificar Base de datos";
-            GridPermisos.Rows[4].HeaderCell.Value = "Añadir cartas a la base de datos";
-            GridPermisos.Rows[5].HeaderCell.Value = "Borrar Cartas de la base de datos";
-            GridPermisos.Rows[0].Tag = "Usuario Guardar";
-            GridPermisos.Rows[1].Tag = "Usuario Borrar";
-            GridPermisos.Rows[2].Tag = "Guardar Cartas";
-            GridPermisos.Rows[3].Tag = "Modificar Base de datos";
-            GridPermisos.Rows[4].Tag = "Añadir cartas a la base de datos";
-            GridPermisos.Rows[5].Tag = "Borrar Cartas de la base de datos";
-            permisos.Cargar(GridPermisos);
-        }
 
+            GridPermisos.Rows.Clear();
+            GridPermisos.Rows.Add(5);
+
+            string[] permisos = {
+        "Usuario Guardar",
+        "Usuario Borrar", 
+        "Modificar Base de datos",
+        "Añadir cartas a la base de datos",
+        "Borrar Cartas de la base de datos"
+    };
+
+            for (int i = 0; i < permisos.Length; i++)
+            {
+                GridPermisos.Rows[i].HeaderCell.Value = permisos[i];
+                GridPermisos.Rows[i].Tag = permisos[i];
+            }
+
+            guardarMemoria.Cargar(GridPermisos);
+
+            cargando = false;
+          
+        }
         private async Task CargarDatosBD()
         {
             try
@@ -145,11 +159,13 @@ namespace FPETDesktopApp.Recursos.Vistas.Administrador
             }
 
             PanelCartasAdmin.ResumeLayout();
+
         }
         private async void VistaAdministrador_Load(object sender, EventArgs e)
         {
+            permisosAplicacion.ActualizarPermisos(this, formMenuRef);
 
-     
+
             GridBD.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells;
             GridBD.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells;
             await Task.WhenAll(
@@ -162,7 +178,7 @@ namespace FPETDesktopApp.Recursos.Vistas.Administrador
             await Task.Delay(2000);
             PBcargaCartas.Visible = false;
             LBLcargaCartas.Visible = false;
-
+            permisosAplicacion.ActualizarPermisos(this, formMenuRef);
 
         }
 
@@ -202,9 +218,15 @@ namespace FPETDesktopApp.Recursos.Vistas.Administrador
 
             if (ComboTablaBD.SelectedIndex == 0)
             {
+               
                 string consultaSQL = consulta.Consulta(0);
                 GridBD.DataSource = consulta.EjecutarConsulta(consultaSQL);
-                Console.WriteLine("tab index" + ComboTablaBD.SelectedIndex);
+          
+            }
+            if (ComboTablaBD.SelectedIndex == 1)
+            {
+                string consultaSQL = consulta.Consulta(1);
+                GridBD.DataSource = consulta.EjecutarConsulta(consultaSQL);
             }
             PanelDetalles();
         }
@@ -246,6 +268,7 @@ namespace FPETDesktopApp.Recursos.Vistas.Administrador
                 switch (ComboTablaBD.SelectedIndex)
                 {
                     case 0:
+                        BTNaccion.Text = "Guardar";
                         LBLnombre.Text = "Nombre";
                         LBLcorreo.Text = "Correo";
                         LBLcontraseña.Text = "Contraseña";
@@ -253,12 +276,13 @@ namespace FPETDesktopApp.Recursos.Vistas.Administrador
                         BTNauxiliar.Visible = false;
                         break;
                     case 1:
+
+                        BTNaccion.Text = "Agregar admin";
                         LBLnombre.Text = "Id_Usuario";
                         LBLcorreo.Text = "Nivel de acesso";
                         LBLcontraseña.Text = "Nota";
                         LBLrol.Visible = false;
                         ComboRol.Visible = false;
-                        BTNaccion.Text = "Guardar";
                         BTNauxiliar.Text = "Agregar Nota";
                         BTNauxiliar.Visible = true;
                         break;
@@ -267,14 +291,20 @@ namespace FPETDesktopApp.Recursos.Vistas.Administrador
                         break;
                 }
             }
-
         }
-
         private void BTNagregar_Click(object sender, EventArgs e)
         {
 
         }
-
+        private void GridPermisos_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+          
+            if (GridPermisos.Columns[e.ColumnIndex] is DataGridViewCheckBoxColumn && e.RowIndex >= 0)
+            {
+                GridPermisos.CommitEdit(DataGridViewDataErrorContexts.Commit);
+                permisosAplicacion.ActualizarPermisos(this, formMenuRef);
+            }
+        }
         private void GridPermisos_CurrentCellDirtyStateChanged(object sender, EventArgs e)
         {
             if (GridPermisos.IsCurrentCellDirty)
@@ -282,14 +312,128 @@ namespace FPETDesktopApp.Recursos.Vistas.Administrador
                 GridPermisos.CommitEdit(DataGridViewDataErrorContexts.Commit);
             }
         }
-
         private void GridPermisos_CellValueChanged(object sender, DataGridViewCellEventArgs e)
         {
+            if (cargando) return;
+
             if (e.RowIndex < 0) return;
-
-            PermisosService permisos = new PermisosService();
-            permisos.Guardar(GridPermisos);
-
+            permisosAplicacion.ActualizarPermisos(this, formMenuRef);
+            guardarMemoria.Guardar(GridPermisos);
         }
-    }
-}   
+            private void BTNaccion_Click(object sender, EventArgs e)
+        {
+            if (BTNaccion.Text == "Guardar")
+            {
+                if (string.IsNullOrWhiteSpace(TXTnombre.Text))
+                {
+                    MessageBox.Show("Por favor ingresa un nombre.", "Campo requerido", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    TXTnombre.Focus();
+                    return;
+                }
+
+                if (string.IsNullOrWhiteSpace(TXTcorreo.Text))
+                {
+                    MessageBox.Show("Por favor ingresa un correo.", "Campo requerido", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    TXTcorreo.Focus();
+                    return;
+                }
+
+                if (string.IsNullOrWhiteSpace(TXTcontraseña.Text))
+                {
+                    MessageBox.Show("Por favor ingresa una contraseña.", "Campo requerido", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    TXTcontraseña.Focus();
+                    return;
+                }
+
+
+                if (!TXTcorreo.Text.Contains("@") || !TXTcorreo.Text.Contains("."))
+                {
+                    MessageBox.Show("Por favor ingresa un correo válido.", "Correo inválido", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    TXTcorreo.Focus();
+                    return;
+                }
+
+                string nombre = TXTnombre.Text.Trim();
+                string correo = TXTcorreo.Text.Trim();
+                string contraseña = TXTcontraseña.Text;
+                string rol = ComboRol.SelectedItem?.ToString() ?? "Usuario";
+                DateTime fechaRegistro = DateTime.Now;
+
+                AgregarRegistro agregar = new AgregarRegistro();
+                agregar.AgregarUsuario(nombre, correo, contraseña, rol, fechaRegistro);
+
+                LimpiarCampos();
+
+                string consultaSQL = consulta.Consulta(0);
+                GridBD.DataSource = consulta.EjecutarConsulta(consultaSQL);
+
+            }
+            else return;
+        
+        }
+
+        private void LimpiarCampos()
+        {
+            TXTnombre.Clear();
+            TXTcorreo.Clear();
+            TXTcontraseña.Clear();
+            TXTnombre.Focus();
+        }
+
+        private void BTNsalir_Click(object sender, EventArgs e)
+        {
+            // Limpiar datos guardados
+            Properties.Settings.Default.correo = "";
+            Properties.Settings.Default.contraseña = "";
+            Properties.Settings.Default.recordar = false;
+            Properties.Settings.Default.Save();
+
+            // Mostrar login
+            Form1 login = new Form1();
+            login.Show();
+
+            // Cerrar formulario actual
+            this.Close();
+        }
+
+        private void GridBD_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if(ComboTablaBD.Text == "")
+            {
+                MessageBox.Show("Selecciona una tabla para mostrar los detalles", "Información", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
+            if (ComboTablaBD.Enabled)
+            {
+                if (ComboTablaBD.SelectedIndex == 0)
+                {       
+                    BTNauxiliar.Text = "Editar";
+
+                    BTNauxiliar.Visible = true;
+
+                    if (e.RowIndex >= 0)
+                    {
+                        DataGridViewRow fila = GridBD.Rows[e.RowIndex];
+                        TXTnombre.Text = fila.Cells["nombre"].Value.ToString();
+                        TXTcorreo.Text = fila.Cells["email"].Value.ToString();
+                        ComboRol.SelectedItem = fila.Cells["rol"].Value.ToString();
+                    }
+                }
+            }
+            else MessageBox.Show("No tienes permisos de Modificar la bases de datos+", "Información");
+        }
+
+        private void BTNauxiliar_Click(object sender, EventArgs e)
+        {
+            if (BTNauxiliar.Text == "Editar" )
+            {
+                string consultaSQL = consulta.Consulta(1);
+                consulta.EjecutarConsulta(consultaSQL);
+                MessageBox.Show("Cambio Exitoso", "Exito");
+                string consultaSQL2 = consulta.Consulta(0);
+                GridBD.DataSource = consulta.EjecutarConsulta(consultaSQL2);
+
+            }
+        }
+    }   
+}

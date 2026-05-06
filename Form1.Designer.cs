@@ -58,7 +58,7 @@
             this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel1.Location = new System.Drawing.Point(0, 0);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(458, 528);
+            this.panel1.Size = new System.Drawing.Size(367, 528);
             this.panel1.TabIndex = 0;
             // 
             // CKrecordar
@@ -70,11 +70,10 @@
             this.CKrecordar.TabIndex = 10;
             this.CKrecordar.Text = "Recordar inicio";
             this.CKrecordar.UseVisualStyleBackColor = true;
-            this.CKrecordar.CheckedChanged += new System.EventHandler(this.CKrecordar_CheckedChanged);
             // 
             // BTNregistro
             // 
-            this.BTNregistro.Location = new System.Drawing.Point(76, 379);
+            this.BTNregistro.Location = new System.Drawing.Point(36, 375);
             this.BTNregistro.Name = "BTNregistro";
             this.BTNregistro.Size = new System.Drawing.Size(109, 61);
             this.BTNregistro.TabIndex = 9;
@@ -95,7 +94,7 @@
             // 
             // BTNinicio
             // 
-            this.BTNinicio.Location = new System.Drawing.Point(225, 379);
+            this.BTNinicio.Location = new System.Drawing.Point(185, 375);
             this.BTNinicio.Name = "BTNinicio";
             this.BTNinicio.Size = new System.Drawing.Size(123, 61);
             this.BTNinicio.TabIndex = 6;
@@ -153,7 +152,7 @@
             this.panel2.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.panel2.Location = new System.Drawing.Point(0, 452);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(458, 76);
+            this.panel2.Size = new System.Drawing.Size(367, 76);
             this.panel2.TabIndex = 1;
             // 
             // flowLayoutPanel1
@@ -162,18 +161,17 @@
             this.flowLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Top;
             this.flowLayoutPanel1.Location = new System.Drawing.Point(0, 0);
             this.flowLayoutPanel1.Name = "flowLayoutPanel1";
-            this.flowLayoutPanel1.Size = new System.Drawing.Size(458, 100);
+            this.flowLayoutPanel1.Size = new System.Drawing.Size(367, 100);
             this.flowLayoutPanel1.TabIndex = 0;
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(458, 528);
+            this.ClientSize = new System.Drawing.Size(367, 528);
             this.Controls.Add(this.panel1);
             this.Name = "Form1";
             this.Text = "Form1";
-            this.Load += new System.EventHandler(this.Form1_Load);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
             this.ResumeLayout(false);

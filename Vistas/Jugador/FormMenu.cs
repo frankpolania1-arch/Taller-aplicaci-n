@@ -21,5 +21,17 @@ namespace FPETDesktopApp.Recursos.Vistas.Jugador
         {
             MessageBox.Show("¡Vamos a jugar!"); 
         }
+
+        private void BTNsalir_Click(object sender, EventArgs e)
+        {
+            Properties.Settings.Default.correo = "";
+            Properties.Settings.Default.contraseña = "";
+            Properties.Settings.Default.recordar = false;
+            Properties.Settings.Default.Save();
+
+            Form1 login = new Form1();
+            login.Show();
+            this.Close();
+        }
     }
 }

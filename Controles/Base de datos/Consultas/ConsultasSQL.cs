@@ -30,6 +30,14 @@ namespace FPETDesktopApp.Recursos.Controles
                         "SELECT id, nombre, email, rol, fecha_registro FROM usuarios";
                     return ConsultaSQL;
 
+                case 0:
+                    ConsultaSQL =
+                        "SELECT id, id_usuario, notas FROM administradores";
+                    return ConsultaSQL;
+                    case 1: 
+                        ConsultaSQL = $"UPDATE usuarios SET nombre = {Vadministrador.TXTnombre.Text},email = {Vadministrador.TXTcorreo.Text},password = {Vadministrador.TXTcontraseña.Text},rol = {Vadministrador.ComboRol.Text} WHERE id = @id";
+                        return ConsultaSQL;
+
                 default:
                     ConsultaSQL = "SELECT * FROM cartas";
                     return MessageBox.Show("No se ha seleccionado ninguna tabla, se mostrará la tabla de usuarios por defecto", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning).ToString();

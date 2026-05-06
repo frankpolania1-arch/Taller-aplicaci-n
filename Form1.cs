@@ -23,42 +23,21 @@ namespace FPETDesktopApp
         InicioSesion sesion = new InicioSesion();
         InicioSesion login = new InicioSesion();
         Autentificar_Campos.Autentificar_Campos Acampos;
-        private string correo;
-        private string contraseña;
-        bool recuerdo = false;
-
+         public string correo;
+        public string contraseña;
+        public bool recordar = false;
+       
         public Form1()
         {
+          
             InitializeComponent();
             TXTcontraseña.PasswordChar = '*';
             BTNinicio.Enabled = true;
+            this.Shown += Form1_Shown;
             VistaRegistro = new FormRegistro();
             Acampos = new Autentificar_Campos.Autentificar_Campos();
         }
-        private void BTNinicio_Click(object sender, EventArgs e)
-        {
-            string rol = login.Login(TXTcorreo.Text, TXTcontraseña.Text);
-
-            if (rol != null)
-            {
-                MessageBox.Show("Inicio de sesión correcto");
-
-                if (rol == "Administrador")
-                {
-                    Vadministrador.Show();
-                    this.Hide();
-                }
-                else if (rol == "Jugador")
-                {
-                    VistaJugador.Show();
-                    this.Hide();
-                }
-            }
-            else
-            {
-                MessageBox.Show("Usuario o contraseña incorrectos");
-            }
-        }
+    
         private void CKmostrar_CheckedChanged(object sender, EventArgs e)
         {
             if (CKmostrar.Checked)
@@ -73,24 +52,51 @@ namespace FPETDesktopApp
             this.Hide();
         }
 
-        private void CKrecordar_CheckedChanged(object sender, EventArgs e)
-        {
-            if (CKrecordar.Checked)
-            {
-                correo = TXTcorreo.Text;
-                contraseña = TXTcontraseña.Text;
-                recuerdo = true;
 
+        private async void Form1_Shown(object sender, EventArgs e)
+        {
+            if (Properties.Settings.Default.recordar)
+            {
+                TXTcorreo.Text = Properties.Settings.Default.correo;
+                TXTcontraseña.Text = Properties.Settings.Default.contraseña;
+                CKrecordar.Checked = true;
+
+                await Task.Delay(100); // 🔥 importante
+
+                BTNinicio.PerformClick();
             }
         }
-
-        private void Form1_Load(object sender, EventArgs e)
+        private void BTNinicio_Click(object sender, EventArgs e)
         {
-            if(recuerdo)
+            string rol = login.Login(TXTcorreo.Text.Trim(), TXTcontraseña.Text.Trim());
+
+            if (rol == null)
             {
-                TXTcorreo.Text = correo;
-                TXTcontraseña.Text = contraseña;
+                MessageBox.Show("Usuario o contraseña incorrectos");
+                return;
             }
+
+            if (CKrecordar.Checked)
+            {
+                Properties.Settings.Default.correo = TXTcorreo.Text.Trim();
+                Properties.Settings.Default.contraseña = TXTcontraseña.Text.Trim();
+                Properties.Settings.Default.recordar = true;
+            }
+            else
+            {
+                Properties.Settings.Default.correo = "";
+                Properties.Settings.Default.contraseña = "";
+                Properties.Settings.Default.recordar = false;
+            }
+
+            Properties.Settings.Default.Save();
+
+            if (rol == "Administrador")
+                Vadministrador.Show();
+            else if (rol == "Jugador")
+                VistaJugador.Show();
+
+            this.Hide();
         }
     }
 }

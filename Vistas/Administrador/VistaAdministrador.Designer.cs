@@ -32,8 +32,11 @@ namespace FPETDesktopApp.Recursos.Vistas.Administrador
         {
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.GridPermisos = new System.Windows.Forms.DataGridView();
+            this.Usuario = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.Administrador = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.panel2 = new System.Windows.Forms.Panel();
+            this.BTNsalir = new System.Windows.Forms.Button();
             this.BTNauxiliar = new System.Windows.Forms.Button();
             this.ComboRol = new System.Windows.Forms.ComboBox();
             this.LBLrol = new System.Windows.Forms.Label();
@@ -51,6 +54,7 @@ namespace FPETDesktopApp.Recursos.Vistas.Administrador
             this.tabPage3 = new System.Windows.Forms.TabPage();
             this.PanelCartasAdmin = new System.Windows.Forms.FlowLayoutPanel();
             this.panel3 = new System.Windows.Forms.Panel();
+            this.BTNborrar = new System.Windows.Forms.Button();
             this.LBLraro = new System.Windows.Forms.Label();
             this.LBLclase = new System.Windows.Forms.Label();
             this.LBLraza = new System.Windows.Forms.Label();
@@ -64,8 +68,6 @@ namespace FPETDesktopApp.Recursos.Vistas.Administrador
             this.PBcargaCartas = new System.Windows.Forms.ProgressBar();
             this.BTNsiguiente = new System.Windows.Forms.Button();
             this.BTNanterior = new System.Windows.Forms.Button();
-            this.Usuario = new System.Windows.Forms.DataGridViewCheckBoxColumn();
-            this.Administrador = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.tabPage2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.GridPermisos)).BeginInit();
             this.tabPage1.SuspendLayout();
@@ -103,6 +105,24 @@ namespace FPETDesktopApp.Recursos.Vistas.Administrador
             this.GridPermisos.Size = new System.Drawing.Size(1217, 692);
             this.GridPermisos.TabIndex = 13;
             // 
+            // Usuario
+            // 
+            this.Usuario.HeaderText = "Usuario";
+            this.Usuario.MinimumWidth = 8;
+            this.Usuario.Name = "Usuario";
+            this.Usuario.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.Usuario.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            this.Usuario.Width = 150;
+            // 
+            // Administrador
+            // 
+            this.Administrador.HeaderText = "Administrador";
+            this.Administrador.MinimumWidth = 8;
+            this.Administrador.Name = "Administrador";
+            this.Administrador.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.Administrador.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            this.Administrador.Width = 150;
+            // 
             // tabPage1
             // 
             this.tabPage1.AutoScroll = true;
@@ -119,6 +139,7 @@ namespace FPETDesktopApp.Recursos.Vistas.Administrador
             // panel2
             // 
             this.panel2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(50)))));
+            this.panel2.Controls.Add(this.BTNsalir);
             this.panel2.Controls.Add(this.BTNauxiliar);
             this.panel2.Controls.Add(this.ComboRol);
             this.panel2.Controls.Add(this.LBLrol);
@@ -137,6 +158,17 @@ namespace FPETDesktopApp.Recursos.Vistas.Administrador
             this.panel2.Size = new System.Drawing.Size(296, 692);
             this.panel2.TabIndex = 2;
             // 
+            // BTNsalir
+            // 
+            this.BTNsalir.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.BTNsalir.Location = new System.Drawing.Point(17, 628);
+            this.BTNsalir.Name = "BTNsalir";
+            this.BTNsalir.Size = new System.Drawing.Size(141, 32);
+            this.BTNsalir.TabIndex = 15;
+            this.BTNsalir.Text = "Cerrar sesión";
+            this.BTNsalir.UseVisualStyleBackColor = true;
+            this.BTNsalir.Click += new System.EventHandler(this.BTNsalir_Click);
+            // 
             // BTNauxiliar
             // 
             this.BTNauxiliar.Anchor = System.Windows.Forms.AnchorStyles.None;
@@ -146,6 +178,7 @@ namespace FPETDesktopApp.Recursos.Vistas.Administrador
             this.BTNauxiliar.TabIndex = 14;
             this.BTNauxiliar.Text = "Agregar registro";
             this.BTNauxiliar.UseVisualStyleBackColor = true;
+            this.BTNauxiliar.Click += new System.EventHandler(this.BTNauxiliar_Click);
             // 
             // ComboRol
             // 
@@ -256,6 +289,7 @@ namespace FPETDesktopApp.Recursos.Vistas.Administrador
             this.BTNaccion.TabIndex = 2;
             this.BTNaccion.Text = "Agregar registro";
             this.BTNaccion.UseVisualStyleBackColor = true;
+            this.BTNaccion.Click += new System.EventHandler(this.BTNaccion_Click);
             // 
             // GridBD
             // 
@@ -265,8 +299,9 @@ namespace FPETDesktopApp.Recursos.Vistas.Administrador
             this.GridBD.Name = "GridBD";
             this.GridBD.RowHeadersWidth = 62;
             this.GridBD.RowTemplate.Height = 28;
-            this.GridBD.Size = new System.Drawing.Size(959, 692);
+            this.GridBD.Size = new System.Drawing.Size(885, 662);
             this.GridBD.TabIndex = 1;
+            this.GridBD.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.GridBD_CellClick);
             // 
             // TABadministrador
             // 
@@ -303,6 +338,7 @@ namespace FPETDesktopApp.Recursos.Vistas.Administrador
             // panel3
             // 
             this.panel3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(50)))));
+            this.panel3.Controls.Add(this.BTNborrar);
             this.panel3.Controls.Add(this.LBLraro);
             this.panel3.Controls.Add(this.LBLclase);
             this.panel3.Controls.Add(this.LBLraza);
@@ -320,6 +356,15 @@ namespace FPETDesktopApp.Recursos.Vistas.Administrador
             this.panel3.Name = "panel3";
             this.panel3.Size = new System.Drawing.Size(1213, 136);
             this.panel3.TabIndex = 0;
+            // 
+            // BTNborrar
+            // 
+            this.BTNborrar.Location = new System.Drawing.Point(1069, 70);
+            this.BTNborrar.Name = "BTNborrar";
+            this.BTNborrar.Size = new System.Drawing.Size(123, 49);
+            this.BTNborrar.TabIndex = 17;
+            this.BTNborrar.Text = "borrar";
+            this.BTNborrar.UseVisualStyleBackColor = true;
             // 
             // LBLraro
             // 
@@ -363,9 +408,9 @@ namespace FPETDesktopApp.Recursos.Vistas.Administrador
             // 
             // BTNagregar
             // 
-            this.BTNagregar.Location = new System.Drawing.Point(1065, 10);
+            this.BTNagregar.Location = new System.Drawing.Point(1069, 7);
             this.BTNagregar.Name = "BTNagregar";
-            this.BTNagregar.Size = new System.Drawing.Size(123, 52);
+            this.BTNagregar.Size = new System.Drawing.Size(123, 49);
             this.BTNagregar.TabIndex = 12;
             this.BTNagregar.Text = "Agregar";
             this.BTNagregar.UseVisualStyleBackColor = true;
@@ -448,24 +493,6 @@ namespace FPETDesktopApp.Recursos.Vistas.Administrador
             this.BTNanterior.UseVisualStyleBackColor = true;
             this.BTNanterior.Click += new System.EventHandler(this.BTNanterior_Click);
             // 
-            // Usuario
-            // 
-            this.Usuario.HeaderText = "Usuario";
-            this.Usuario.MinimumWidth = 8;
-            this.Usuario.Name = "Usuario";
-            this.Usuario.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.Usuario.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
-            this.Usuario.Width = 150;
-            // 
-            // Administrador
-            // 
-            this.Administrador.HeaderText = "Administrador";
-            this.Administrador.MinimumWidth = 8;
-            this.Administrador.Name = "Administrador";
-            this.Administrador.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.Administrador.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
-            this.Administrador.Width = 150;
-            // 
             // VistaAdministrador
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
@@ -495,13 +522,10 @@ namespace FPETDesktopApp.Recursos.Vistas.Administrador
         private System.Windows.Forms.TabPage tabPage2;
         private System.Windows.Forms.TabPage tabPage1;
         private System.Windows.Forms.TabControl TABadministrador;
-        private System.Windows.Forms.DataGridView GridPermisos;
         private System.Windows.Forms.Button BTNaccion;
         private System.Windows.Forms.Panel panel2;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.TextBox TXTcorreo;
         private System.Windows.Forms.Label LBLcorreo;
-        private System.Windows.Forms.TextBox TXTnombre;
         private System.Windows.Forms.Label LBLnombre;
         private System.Windows.Forms.Button BTNanterior;
         private System.Windows.Forms.Button BTNsiguiente;
@@ -511,7 +535,6 @@ namespace FPETDesktopApp.Recursos.Vistas.Administrador
         public System.Windows.Forms.DataGridView GridBD;
         public System.Windows.Forms.ComboBox ComboTablaBD;
         public System.Windows.Forms.Label LBLcargaCartas;
-        private System.Windows.Forms.Button BTNagregar;
         public System.Windows.Forms.TabPage tabPage3;
         public System.Windows.Forms.Label LBLtipo;
         public System.Windows.Forms.Label LBLataque;
@@ -521,12 +544,18 @@ namespace FPETDesktopApp.Recursos.Vistas.Administrador
         public System.Windows.Forms.Label LBLclase;
         public System.Windows.Forms.Label LBLraza;
         public System.Windows.Forms.Label LBLraro;
-        private System.Windows.Forms.ComboBox ComboRol;
         private System.Windows.Forms.Label LBLrol;
-        private System.Windows.Forms.TextBox TXTcontraseña;
         private System.Windows.Forms.Label LBLcontraseña;
         private System.Windows.Forms.Button BTNauxiliar;
         private System.Windows.Forms.DataGridViewCheckBoxColumn Usuario;
         private System.Windows.Forms.DataGridViewCheckBoxColumn Administrador;
+        public System.Windows.Forms.DataGridView GridPermisos;
+        public System.Windows.Forms.Button BTNborrar;
+        public System.Windows.Forms.Button BTNagregar;
+        private System.Windows.Forms.Button BTNsalir;
+        public System.Windows.Forms.TextBox TXTcorreo;
+        public System.Windows.Forms.TextBox TXTnombre;
+        public System.Windows.Forms.ComboBox ComboRol;
+        public System.Windows.Forms.TextBox TXTcontraseña;
     }
 }
